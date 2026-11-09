@@ -136,8 +136,9 @@ st.markdown(
 .pie a {{ color:{C['diamante']}; }}
 
 /* Controles: caja oscura propia, texto blanco y acento verde aunque no exista config.toml */
-[data-testid="stSlider"], [data-testid="stRadio"], [data-testid="stCheckbox"],
-[data-testid="stSelectbox"], [data-testid="stColorPicker"] {{
+[data-testid="stMain"] [data-testid="stSlider"], [data-testid="stMain"] [data-testid="stRadio"],
+[data-testid="stMain"] [data-testid="stCheckbox"], [data-testid="stMain"] [data-testid="stSelectbox"],
+[data-testid="stMain"] [data-testid="stColorPicker"] {{
   background:#1e1e1e; border:3px solid #000; box-shadow:inset 3px 3px 0 #3a3a3a; padding:8px 12px 6px; }}
 [data-testid="stMain"] [data-testid="stWidgetLabel"] p,
 [data-testid="stMain"] [data-testid="stRadio"] label p,
@@ -146,6 +147,9 @@ st.markdown(
 [data-testid="stSlider"] [data-baseweb="slider"], [data-testid="stSlider"] [role="group"],
 [data-testid="stRadio"] [role="radiogroup"],
 [data-testid="stCheckbox"] label {{ filter:hue-rotate(110deg); }}
+/* Menú lateral: sin caja, letras café oscuro y grandes sobre los tablones */
+[data-testid="stSidebar"] [data-testid="stRadio"] label p {{ color:#2b1d0e !important; font-size:23px;
+  text-shadow:1px 1px 0 rgba(255,255,255,.35); }}
 </style>""",
     unsafe_allow_html=True,
 )
@@ -831,7 +835,7 @@ def recursos(espejo):
 # Navegación (barra lateral)
 # ---------------------------------------------------------------------------
 secciones = {
-    "🏠 Inicio": inicio,
+    "0. Inicio": inicio,
     "1. Cierre": seccion_cierre,
     "2. Proximidad": seccion_proximidad,
     "3. Continuidad": seccion_continuidad,
