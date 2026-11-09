@@ -134,6 +134,18 @@ st.markdown(
 .tabla th {{ font-family:{PIXEL}; font-size:9px; }}
 .pie {{ font-family:{TEXTO}; font-size:18px; color:#bdbdbd; margin-top:26px; }}
 .pie a {{ color:{C['diamante']}; }}
+
+/* Controles: caja oscura propia, texto blanco y acento verde aunque no exista config.toml */
+[data-testid="stSlider"], [data-testid="stRadio"], [data-testid="stCheckbox"],
+[data-testid="stSelectbox"], [data-testid="stColorPicker"] {{
+  background:#1e1e1e; border:3px solid #000; box-shadow:inset 3px 3px 0 #3a3a3a; padding:8px 12px 6px; }}
+[data-testid="stMain"] [data-testid="stWidgetLabel"] p,
+[data-testid="stMain"] [data-testid="stRadio"] label p,
+[data-testid="stMain"] [data-testid="stCheckbox"] label p,
+[data-testid="stMain"] [data-testid="stMarkdownContainer"] > p {{ color:#fff !important; text-shadow:2px 2px 0 #000; }}
+[data-testid="stSlider"] [data-baseweb="slider"], [data-testid="stSlider"] [role="group"],
+[data-testid="stRadio"] [role="radiogroup"],
+[data-testid="stCheckbox"] label {{ filter:hue-rotate(110deg); }}
 </style>""",
     unsafe_allow_html=True,
 )
@@ -185,7 +197,7 @@ def encabezado(n, titulo, subtitulo, widget):
     slots = "".join(f'<div class="slot{" on" if i == n else ""}">{i}</div>' for i in range(1, 8))
     st.markdown(
         f'<div class="banner"><div class="pasto"></div><div class="tierra">'
-        f'<div class="num">BLOQUE {n} / 7 · PRINCIPIO GESTALT</div>'
+        f'<div class="num">BLOQUE {n} DE 7</div>'
         f'<div class="titulo">{titulo}</div><div class="sub">{subtitulo}</div>'
         f'<span class="chip">ipywidgets.{widget}</span></div></div>'
         f'<div class="hotbar">{slots}</div>',
@@ -195,12 +207,12 @@ def encabezado(n, titulo, subtitulo, widget):
 
 def teoria(que_es, en_datos, mision):
     panel("¿QUÉ ES?", f"<p>{que_es}</p>")
-    panel("EN VISUALIZACIÓN DE DATOS", f"<p>{en_datos}</p>")
+    panel("¿Y EN LAS GRÁFICAS?", f"<p>{en_datos}</p>")
     panel("⛏ TU MISIÓN", f"<p>{mision}</p>", "mision")
 
 
 def widget_recomendado(widget, porque, codigo, equivalente):
-    with st.expander(f"🧩 Widget recomendado: ipywidgets.{widget}"):
+    with st.expander(f"🧩 Para programadores: ipywidgets.{widget}"):
         st.markdown(f"**¿Por qué este widget?** {porque}")
         st.markdown("**En un notebook de Jupyter:**")
         st.code(codigo, language="python")
@@ -211,13 +223,13 @@ def widget_recomendado(widget, porque, codigo, equivalente):
 # Inicio
 # ---------------------------------------------------------------------------
 PRINCIPIOS = [
-    ("Cierre", "IntSlider", "Completamos figuras incompletas."),
-    ("Proximidad", "ToggleButtons", "Lo cercano se percibe como grupo."),
-    ("Continuidad", "Dropdown", "El ojo sigue líneas y trayectorias suaves."),
-    ("Semejanza", "ColorPicker", "Lo parecido se percibe relacionado."),
-    ("Figura y fondo", "FloatSlider", "Separamos el foco de su contexto."),
-    ("Dirección común", "Play", "Lo que se mueve igual, va junto."),
-    ("Simetría", "ToggleButton", "Lo simétrico se percibe como un todo."),
+    ("Cierre", "IntSlider", "Tu cerebro rellena los huecos."),
+    ("Proximidad", "ToggleButtons", "Lo que está cerca parece un equipo."),
+    ("Continuidad", "Dropdown", "Tus ojos siguen los caminos suaves."),
+    ("Semejanza", "ColorPicker", "Lo que se parece, parece familia."),
+    ("Figura y fondo", "FloatSlider", "Ves lo importante y lo demás queda atrás."),
+    ("Dirección común", "Play", "Lo que avanza junto es un grupo."),
+    ("Simetría", "ToggleButton", "Igual de los dos lados se ve ordenado."),
 ]
 
 
@@ -226,18 +238,18 @@ def inicio():
         f'<div class="banner"><div class="pasto"></div><div class="tierra">'
         f'<div class="num">UL TABLERO 2026</div>'
         f'<div class="titulo">El Mundo Gestalt</div>'
-        f'<div class="sub">7 principios de percepción, 7 bloques interactivos, 7 widgets.</div>'
+        f'<div class="sub">7 trucos que usa tu cerebro para entender dibujos y gráficas.</div>'
         f'</div></div>',
         unsafe_allow_html=True,
     )
     panel(
-        "LA IDEA",
-        "<p>La psicología de la <b>Gestalt</b> (palabra alemana para <i>forma</i> o <i>estructura unificada</i>) "
-        "sostiene que la mente percibe las cosas como un todo y no como piezas sueltas. Sus principios, "
-        "formulados por Wertheimer, Köhler y Koffka a inicios del siglo XX, explican por qué un gráfico "
-        "se entiende de un vistazo… o por qué confunde.</p>"
-        "<p>En este mundo cada principio es un <b>bloque</b>: lee la teoría, cumple la misión moviendo los "
-        "controles y descubre qué widget de <b>ipywidgets</b> lo ejemplifica en un notebook.</p>",
+        "¿DE QUÉ SE TRATA?",
+        "<p>Tu cerebro es un <b>constructor experto</b>: cuando ve muchos bloques sueltos, los junta y arma "
+        "una figura completa. A esto los científicos le llaman <b>Gestalt</b>, una palabra alemana que "
+        "significa <i>forma</i>.</p>"
+        "<p>Hace más de 100 años, unos científicos descubrieron <b>7 trucos</b> que usa tu cerebro para ver. "
+        "Hoy los usamos para hacer gráficas fáciles de entender. Entra a cada bloque, lee, mueve los "
+        "controles y cumple la misión. ⛏</p>",
     )
     tarjetas = "".join(
         f'<div class="panel"><div class="t">BLOQUE {i} · {n.upper()}</div>'
@@ -245,7 +257,7 @@ def inicio():
         for i, (n, w, d) in enumerate(PRINCIPIOS, start=1)
     )
     st.markdown(f'<div class="grid7">{tarjetas}</div>', unsafe_allow_html=True)
-    nota("Usa la barra lateral para entrar a cada bloque. ⛏")
+    nota("Elige un bloque en el menú de la izquierda para empezar. ⛏")
 
 
 # ---------------------------------------------------------------------------
@@ -274,36 +286,35 @@ def anillo_svg(removidos, avance, guia):
         cuerpo.append(bloque(px, py, s, C["diamante"] if i < llenas else C["piedra"]))
     centro = m + n * s / 2
     cuerpo.append(texto(centro, centro + 4, f"{avance}%", "#fff", 26, "middle", PIXEL))
-    cuerpo.append(texto(centro, centro + 34, "EXCAVACIÓN", "#bdbdbd", 22, "middle"))
+    cuerpo.append(texto(centro, centro + 34, "EXCAVADO", "#bdbdbd", 22, "middle"))
     lado = n * s + 2 * m
     return svg(lado, lado, "".join(cuerpo), C["cueva"])
 
 
 def seccion_cierre():
-    encabezado(1, "Cierre", "La mente completa lo que falta.", "IntSlider")
+    encabezado(1, "Cierre", "Tu cerebro rellena los huecos.", "IntSlider")
     izq, der = st.columns([1, 1.25], gap="large")
     with izq:
         teoria(
-            "Cuando una figura está incompleta, el cerebro <b>rellena los huecos</b> y la percibe cerrada. "
-            "No necesitamos ver cada borde para reconocer un círculo o un cuadrado.",
-            "Permite gráficos más limpios: <b>donas y medidores</b> que se leen aunque tengan cortes, "
-            "gráficas <b>sin marco</b> ni cuadrícula pesada y líneas con datos faltantes que aún se siguen.",
-            "Usa el pico para quitar bloques del anillo de excavación. ¿Hasta qué porcentaje sigues viendo un "
-            "anillo completo?",
+            "Si a un dibujo le faltan pedazos, tu cerebro <b>rellena los huecos</b> solito y ves la figura "
+            "completa. ¡Ni te das cuenta!",
+            "Por eso una gráfica puede tener <b>espacios o cortes</b> y aun así la entiendes. No hace falta "
+            "dibujar todos los bordes.",
+            "Usa el pico para quitarle bloques al círculo. ¿Hasta cuándo sigues viendo un círculo?",
         )
     with der:
-        quitados = st.slider("⛏ Bloques removidos con el pico (%)", 0, 90, 30, step=5)
+        quitados = st.slider("⛏ ¿Cuántos bloques quitas con el pico? (%)", 0, 90, 30, step=5)
         a, b = st.columns(2)
-        avance = a.slider("💎 Avance del KPI (%)", 0, 100, 72)
+        avance = a.slider("💎 ¿Cuánto llevamos excavado? (%)", 0, 100, 72)
         b.write("")
-        guia = b.checkbox("Mostrar huecos", value=False)
+        guia = b.checkbox("Ver los huecos", value=False)
         lienzo(anillo_svg(quitados, avance, guia))
         if quitados <= 45:
-            nota("Aunque faltan bloques, tu mente sigue viendo <b>un anillo completo</b>: eso es cierre.")
+            nota("¡Le faltan bloques, pero tú sigues viendo un <b>círculo completo</b>! Tu cerebro rellenó los huecos.")
         elif quitados <= 70:
-            nota("Cada vez cuesta más: el cierre funciona mientras quede suficiente <b>estructura</b>.")
+            nota("Ya cuesta más trabajo… tu cerebro necesita <b>suficientes pistas</b> para adivinar la figura.")
         else:
-            nota("La forma se rompió: el cierre tiene un límite. <b>No abuses de los cortes.</b>", alerta=True)
+            nota("¡Se rompió! Con tantos huecos tu cerebro <b>ya no puede</b> adivinar la figura.", alerta=True)
     widget_recomendado(
         "IntSlider",
         "Un deslizador entero permite quitar información poco a poco y encontrar el punto donde el "
@@ -364,27 +375,27 @@ def leyenda_minerales():
 
 
 def seccion_proximidad():
-    encabezado(2, "Proximidad", "Lo que está cerca, se percibe junto.", "ToggleButtons")
+    encabezado(2, "Proximidad", "Lo que está cerca parece un equipo.", "ToggleButtons")
     izq, der = st.columns([1, 1.25], gap="large")
     with izq:
         teoria(
-            "Los elementos <b>cercanos entre sí</b> se perciben como un grupo, aunque sean idénticos. "
-            "El espacio en blanco agrupa sin necesidad de cajas ni líneas.",
-            "En barras agrupadas, el <b>espacio entre grupos</b> decide qué compara el lector: "
-            "biomas entre sí o un mineral a través de los biomas. Los mismos datos cuentan otra historia.",
-            "Cambia el agrupamiento y luego reduce la separación a 0. ¿Qué pasa con los grupos?",
+            "Cuando las cosas están <b>juntitas</b>, tu cerebro piensa que son un equipo, aunque sean iguales. "
+            "Como los amigos que se sientan juntos en el recreo.",
+            "En una gráfica de barras, las barras que están juntas se comparan entre sí. El <b>espacio</b> "
+            "entre grupos le dice a tus ojos cuáles son los equipos.",
+            "Cambia los equipos con los botones. Luego pon el espacio en 0. ¿Todavía ves los equipos?",
         )
     with der:
-        modo = st.radio("Agrupar por", ["Bioma", "Mineral"], horizontal=True)
-        sep = st.slider("Separación entre grupos (bloques)", 0, 4, 2)
-        lienzo(barras_agrupadas_svg(modo == "Bioma", sep))
+        modo = st.radio("¿Cómo armamos los equipos?", ["Por lugar", "Por mineral"], horizontal=True)
+        sep = st.slider("↔ Espacio entre equipos (bloques)", 0, 4, 2)
+        lienzo(barras_agrupadas_svg(modo == "Por lugar", sep))
         st.markdown(f'<div class="nota">{leyenda_minerales()}</div>', unsafe_allow_html=True)
         if sep == 0:
-            nota("Sin espacio, los grupos desaparecen: el ojo ve <b>una sola fila de barras</b>.", alerta=True)
-        elif modo == "Bioma":
-            nota("Agrupado por bioma, comparas la <b>mezcla de minerales</b> de cada lugar.")
+            nota("¡Sin espacio ya no hay equipos! Parece <b>una sola fila</b> de barras.", alerta=True)
+        elif modo == "Por lugar":
+            nota("Cada lugar es un equipo: ves <b>qué minerales hay</b> en cada uno.")
         else:
-            nota("Agrupado por mineral, comparas <b>dónde abunda</b> cada mineral.")
+            nota("Cada mineral es un equipo: ves <b>en qué lugar hay más</b> de cada uno.")
     widget_recomendado(
         "ToggleButtons",
         "Un conjunto de botones exclusivos deja cambiar el criterio de agrupación con un clic y ver "
@@ -410,9 +421,9 @@ TUNELES = {"Túnel A": 12, "Túnel B": 7, "Túnel C": 18, "Túnel D": 4,
 def tuneles_svg(orden, rieles):
     s, izq, m = 16, 92, 16
     items = list(TUNELES.items())
-    if orden == "Descendente":
+    if orden == "De mayor a menor":
         items.sort(key=lambda t: -t[1])
-    elif orden == "Ascendente":
+    elif orden == "De menor a mayor":
         items.sort(key=lambda t: t[1])
     cuerpo, puntos = [], []
     for fila, (nombre, valor) in enumerate(items):
@@ -433,26 +444,26 @@ def tuneles_svg(orden, rieles):
 
 
 def seccion_continuidad():
-    encabezado(3, "Continuidad", "El ojo sigue el camino más suave.", "Dropdown")
+    encabezado(3, "Continuidad", "Tus ojos siguen el camino más suave.", "Dropdown")
     izq, der = st.columns([1, 1.25], gap="large")
     with izq:
         teoria(
-            "Percibimos los elementos alineados sobre una línea o curva como <b>un mismo recorrido</b>, "
-            "y el ojo prefiere seguir trayectorias suaves en lugar de cambios bruscos.",
-            "<b>Ordenar las barras</b> crea un borde continuo que se lee de un vistazo; las <b>líneas</b> en "
-            "series de tiempo guían la mirada. Un orden arbitrario obliga a saltar de dato en dato.",
-            "Activa los rieles y cambia el orden. ¿Con cuál se ve el ranking de túneles sin esfuerzo?",
+            "Tus ojos son como un carrito de mina: les gusta seguir un <b>riel suave</b>, sin saltos ni "
+            "vueltas raras.",
+            "Si <b>ordenas</b> las barras de mayor a menor, tus ojos bajan como por una resbaladilla y ves "
+            "rápido cuál es la más grande.",
+            "Cambia el orden de los túneles. ¿Con cuál orden el riel se ve más suave y fácil de seguir?",
         )
     with der:
         a, b = st.columns([1.3, 1])
-        orden = a.selectbox("Orden de los túneles", ["Alfabético", "Descendente", "Ascendente"])
+        orden = a.selectbox("¿En qué orden van los túneles?", ["Por letra", "De mayor a menor", "De menor a mayor"])
         b.write("")
-        rieles = b.checkbox("🛤 Rieles", value=True)
+        rieles = b.checkbox("Rieles", value=True)
         lienzo(tuneles_svg(orden, rieles))
-        if orden == "Alfabético":
-            nota("El riel zigzaguea: el ojo <b>salta</b> y no encuentra el patrón.", alerta=True)
+        if orden == "Por letra":
+            nota("¡El riel va de un lado a otro! Tus ojos <b>brincan</b> y cuesta ver cuál túnel es el más largo.", alerta=True)
         else:
-            nota("El riel fluye en un solo sentido: la <b>continuidad</b> revela el ranking al instante.")
+            nota("¡El riel va suavecito! Ves de un vistazo <b>cuál túnel es el más largo</b>.")
     widget_recomendado(
         "Dropdown",
         "Un menú desplegable permite probar distintos órdenes del mismo gráfico y comparar cuál "
@@ -492,16 +503,16 @@ def dispersion_svg(modo, resaltado, color_resaltado):
         y = arr + h - v / 10 * h
         cuerpo.append(f'<rect x="{izq}" y="{y:.0f}" width="{w}" height="1" fill="#333"/>')
         cuerpo.append(texto(izq - 8, y + 5, v, "#cfcfcf", 18, "end"))
-    cuerpo.append(texto(izq + w / 2, arr + h + 42, "Profundidad (capa)", "#e6e6e6", 20, "middle"))
+    cuerpo.append(texto(izq + w / 2, arr + h + 42, "¿Qué tan profundo está? →", "#e6e6e6", 20, "middle"))
     cuerpo.append(f'<text transform="translate(18 {arr + h / 2}) rotate(-90)" fill="#e6e6e6" font-size="20" '
-                  f'font-family="{TEXTO}" text-anchor="middle">Tamaño de veta</text>')
+                  f'font-family="{TEXTO}" text-anchor="middle">Tamaño del mineral</text>')
     puntos = sorted(VETAS, key=lambda v: v[0] == resaltado)  # el resaltado al frente
     for mineral, capa, tam in puntos:
         x = izq + round(capa / 64 * w / s) * s - s / 2
         y = arr + h - round(tam / 10 * h / s) * s - s / 2
-        if modo == "Todos iguales":
+        if modo == "Todos grises":
             color = "#9E9E9E"
-        elif modo == "Color por mineral":
+        elif modo == "Un color por mineral":
             color = COLOR_MINERAL[mineral]
         else:
             color = color_resaltado if mineral == resaltado else "#4d4d4d"
@@ -510,28 +521,29 @@ def dispersion_svg(modo, resaltado, color_resaltado):
 
 
 def seccion_semejanza():
-    encabezado(4, "Semejanza", "Lo parecido se percibe como familia.", "ColorPicker")
+    encabezado(4, "Semejanza", "Lo que se parece, parece familia.", "ColorPicker")
     izq, der = st.columns([1, 1.25], gap="large")
     with izq:
         teoria(
-            "Los elementos que comparten <b>color, forma o tamaño</b> se perciben relacionados, aunque "
-            "estén dispersos. El color es la señal de semejanza más fuerte.",
-            "Usa un <b>color consistente por categoría</b> en todo el tablero y reserva un color distinto "
-            "para <b>resaltar</b> lo importante. Si todo tiene color, nada destaca.",
-            "Empieza con «Todos iguales». Luego colorea por mineral y finalmente resalta el diamante con tu "
-            "propio color.",
+            "Las cosas que tienen el <b>mismo color</b> o la misma forma parecen de la misma familia, "
+            "aunque estén separadas.",
+            "En las gráficas cada grupo tiene <b>su propio color</b>. Y si quieres que algo resalte, píntalo "
+            "de un color diferente a todo lo demás.",
+            "Primero mira los bloques grises. Luego dale un color a cada mineral. Al final elige un mineral "
+            "y ¡píntalo de tu color favorito!",
         )
     with der:
-        modo = st.radio("Codificación", ["Todos iguales", "Color por mineral", "Resaltar uno"], horizontal=True)
+        modo = st.radio("¿Cómo pintamos los bloques?", ["Todos grises", "Un color por mineral", "Resaltar uno"],
+                        horizontal=True)
         a, b = st.columns(2)
-        resaltado = a.selectbox("Mineral a resaltar", list(COLOR_MINERAL), index=2,
+        resaltado = a.selectbox("¿Qué mineral resaltamos?", list(COLOR_MINERAL), index=2,
                                 disabled=modo != "Resaltar uno")
-        color = b.color_picker("🎨 Color de resaltado", C["redstone"], disabled=modo != "Resaltar uno")
+        color = b.color_picker("🎨 Tu color", C["redstone"], disabled=modo != "Resaltar uno")
         lienzo(dispersion_svg(modo, resaltado if modo == "Resaltar uno" else None, color))
         mensajes = {
-            "Todos iguales": ("Sin semejanza de color ves <b>una sola nube</b> de puntos.", True),
-            "Color por mineral": ("Ahora aparecen <b>tres familias</b>: el diamante vive en lo profundo.", False),
-            "Resaltar uno": (f"Todo lo demás se agrupa como contexto; el <b>{resaltado.lower()}</b> salta a la vista.", False),
+            "Todos grises": ("Todo gris parece <b>un solo montón</b> de bloques.", True),
+            "Un color por mineral": ("¡Aparecen <b>3 familias</b>! Y mira: el diamante está muy profundo.", False),
+            "Resaltar uno": (f"Lo demás queda apagado y el <b>{resaltado.lower()}</b> brilla. ¡Lo encuentras al instante!", False),
         }
         nota(*mensajes[modo])
     widget_recomendado(
@@ -606,27 +618,27 @@ def lineas_svg(foco, opacidad, noche):
 
 
 def seccion_figura_fondo():
-    encabezado(5, "Figura y fondo", "Lo importante al frente, el resto detrás.", "FloatSlider")
+    encabezado(5, "Figura y fondo", "Lo importante adelante, lo demás atrás.", "FloatSlider")
     izq, der = st.columns([1, 1.25], gap="large")
     with izq:
         teoria(
-            "Separamos automáticamente lo que es <b>figura</b> (el objeto de atención) de lo que es "
-            "<b>fondo</b> (el contexto). El contraste decide qué ocupa cada papel.",
-            "Destaca la serie clave con un color fuerte y deja el resto en <b>gris tenue</b> como contexto. "
-            "Un fondo limpio y bien contrastado evita que los datos compitan entre sí.",
-            "Sube la opacidad del fondo al máximo: ¿encuentras tu mina? Luego bájala y cambia a modo cueva.",
+            "Tu cerebro separa lo <b>importante</b> (la figura) de lo que está atrás (el fondo). Como cuando "
+            "buscas a tu amigo en una foto llena de gente.",
+            "Para que algo resalte en una gráfica, píntalo con un <b>color fuerte</b> y deja lo demás en "
+            "<b>gris clarito</b>.",
+            "Sube la barra hasta el máximo. ¿Todavía encuentras tu mina? Luego bájala y prueba el modo cueva.",
         )
     with der:
         a, b = st.columns([1.3, 1])
-        foco = a.selectbox("Mina en primer plano", MINAS, index=3)
+        foco = a.selectbox("¿Qué mina quieres ver?", MINAS, index=3)
         b.write("")
-        noche = b.toggle("🌙 Cueva", value=False)
-        opacidad = st.slider("Opacidad del fondo (contexto)", 0.05, 1.0, 0.25, step=0.05)
+        noche = b.toggle("Modo cueva", value=False)
+        opacidad = st.slider("👀 ¿Qué tanto se ven las otras minas?", 0.05, 1.0, 0.25, step=0.05)
         lienzo(lineas_svg(foco, opacidad, noche))
         if opacidad >= 0.8:
-            nota("Con el contexto tan fuerte, la figura <b>se pierde en el fondo</b>.", alerta=True)
+            nota("¡Las otras minas tapan la tuya! La figura <b>se perdió en el fondo</b>.", alerta=True)
         else:
-            nota(f"El contraste convierte a <b>{foco}</b> en figura; las demás quedan como fondo útil.")
+            nota(f"¡Ahí está <b>{foco}</b>! Resalta y las demás minas se quedan atrás.")
     widget_recomendado(
         "FloatSlider",
         "Un deslizador decimal controla de forma continua la opacidad del contexto y muestra en qué "
@@ -708,29 +720,29 @@ def pendiente_svg(colorear):
 
 
 def seccion_direccion_comun():
-    encabezado(6, "Dirección común", "Lo que avanza igual, se percibe como equipo.", "Play")
+    encabezado(6, "Dirección común", "Lo que avanza junto es un grupo.", "Play")
     izq, der = st.columns([1, 1.25], gap="large")
     with izq:
         teoria(
-            "Los elementos que se <b>mueven o apuntan en la misma dirección</b> se perciben como un grupo, "
-            "incluso cuando son idénticos al resto.",
-            "Es la base de los <b>gráficos de pendiente</b> (slope charts), las flechas de tendencia y los "
-            "gráficos animados: el lector agrupa lo que sube y lo que baja sin leer cada número.",
-            "Observa la animación con el color apagado: ¿distingues a la manada? Después compara qué aldeas "
-            "ganaron esmeraldas.",
+            "Cuando varias cosas se mueven <b>hacia el mismo lado</b>, tu cerebro piensa que van juntas. "
+            "Como una parvada de pájaros volando.",
+            "En una gráfica de líneas, las que <b>suben</b> parecen un grupo y las que <b>bajan</b> parecen "
+            "otro. ¡Sin leer ningún número!",
+            "Mira la animación: todos los bloques son iguales. ¿Encuentras al grupo que viaja junto? Si no, "
+            "píntalo de verde.",
         )
     with der:
         a, b = st.columns(2)
-        manada = a.slider("Bloques en manada", 3, 20, 10)
+        manada = a.slider("¿Cuántos bloques viajan juntos?", 3, 20, 10)
         vel = b.slider("Velocidad", 1, 5, 2)
-        colorear = st.checkbox("🟩 Pintar la manada de otro color", value=False)
+        colorear = st.checkbox("Pintar de verde al grupo", value=False)
         params = json.dumps({"total": 40, "manada": manada, "vel": vel, "colorear": colorear})
         components.html(ANIMACION.replace("__PARAMS__", params), height=300)
-        nota("Todos los bloques son <b>idénticos</b>; solo el movimiento compartido revela a la manada.")
-        st.markdown("**Esmeraldas por aldea · 2025 → 2026**")
-        color_dir = st.checkbox("Colorear según dirección", value=False)
+        nota("Todos los bloques son <b>iguales</b>. Descubres al grupo solo porque <b>se mueven hacia el mismo lado</b>.")
+        st.markdown("**¿Cuántas esmeraldas juntó cada aldea? · 2025 → 2026**")
+        color_dir = st.checkbox("Pintar: verde si subió, rojo si bajó", value=False)
         lienzo(pendiente_svg(color_dir))
-        nota("Incluso en gris, las líneas que <b>suben</b> y las que <b>bajan</b> forman dos grupos.")
+        nota("Aunque todo esté gris, ves dos grupos: las líneas que <b>suben</b> y las que <b>bajan</b>.")
     widget_recomendado(
         "Play",
         "Play anima un valor paso a paso. Enlazado a un deslizador con jslink, mueve los elementos en el "
@@ -784,23 +796,23 @@ def mariposa_svg(espejo):
 
 
 def seccion_simetria():
-    encabezado(7, "Simetría", "El equilibrio se percibe como un todo.", "ToggleButton")
+    encabezado(7, "Simetría", "Igual de los dos lados se ve ordenado.", "ToggleButton")
     izq, der = st.columns([1, 1.25], gap="large")
     with izq:
         teoria(
-            "Tendemos a percibir los objetos <b>simétricos</b> como una sola figura estable y ordenada, "
-            "y buscamos un eje central que los organice.",
-            "Los <b>gráficos de mariposa</b> y las pirámides de población usan un eje central para comparar "
-            "dos perfiles completos. Un diseño equilibrado transmite orden y facilita la comparación.",
-            "Activa la vista en espejo: ¿qué mundo es rico en madera y cuál en minerales?",
+            "Cuando algo es <b>igual de los dos lados</b>, como una mariposa, tu cerebro lo ve como una sola "
+            "figura bien ordenada.",
+            "Si pones dos grupos <b>uno frente al otro</b> con una línea en medio, es facilísimo "
+            "compararlos. ¡Como un espejo!",
+            "Prende y apaga el espejo. ¿Qué mundo tiene más madera? ¿Y cuál tiene más minerales?",
         )
     with der:
-        espejo = st.toggle("🪞 Vista en espejo", value=True)
+        espejo = st.toggle("Modo espejo", value=True)
         lienzo(mariposa_svg(espejo))
         if espejo:
-            nota("Con el eje central, cada mundo forma <b>una silueta</b> y comparas perfiles completos.")
+            nota("Con el espejo, cada mundo forma <b>su propia figura</b> y comparas todo de un vistazo.")
         else:
-            nota("Sin simetría hay que comparar fila por fila; el <b>perfil</b> de cada mundo se diluye.", alerta=True)
+            nota("Sin espejo tienes que leer <b>fila por fila</b>. ¡Cuesta más trabajo!", alerta=True)
     widget_recomendado(
         "ToggleButton",
         "Un interruptor de dos estados alterna entre la vista simétrica y la asimétrica para comparar el "
